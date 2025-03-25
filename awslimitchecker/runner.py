@@ -334,7 +334,7 @@ class Runner(object):
             service=self.service_name
         )
         if metrics:
-            for svc, svc_limits in sorted(self.checker.get_limits().items()):
+            for svc, svc_limits in sorted(self.checker.get_limits(service=self.service_name, use_ta=(not self.skip_ta)).items()):
                 if self.service_name and svc not in self.service_name:
                     continue
                 for _, limit in sorted(svc_limits.items()):
