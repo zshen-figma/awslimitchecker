@@ -38,7 +38,7 @@ Jason Antman <jason@jasonantman.com> <http://www.jasonantman.com>
 """
 
 from awslimitchecker.metrics.base import MetricsProvider
-from awslimitchecker.metrics import Dummy, Datadog
+from awslimitchecker.metrics import Dummy, Datadog, StatsD
 
 import pytest
 
@@ -74,7 +74,8 @@ class TestMetricsProvider(object):
         assert MetricsProvider.providers_by_name() == {
             'Dummy': Dummy,
             'MPTester': MPTester,
-            'Datadog': Datadog
+            'Datadog': Datadog,
+            'StatsD': StatsD
         }
 
     def test_get_provider_by_name(self):

@@ -40,3 +40,4 @@ Jason Antman <jason@jasonantman.com> <http://www.jasonantman.com>
 from .base import MetricsProvider
 from .dummy import Dummy
 from .datadog import Datadog
+from .statsd import StatsD
