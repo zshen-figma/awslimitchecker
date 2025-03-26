@@ -245,10 +245,20 @@ class _VpcService(_AwsService):
             Filters=[{'Name': 'owner-id', 'Values': [self.current_account_id]}]
         )
 
-        self.limits['Network interfaces per Region']._add_current_usage(
-            len(enis['NetworkInterfaces']),
-            aws_type='AWS::EC2::NetworkInterface'
-        )
+        num_enis_by_az = {}
+        for eni in enis['NetworkInterfaces']:
+            if eni['AvailabilityZone'] not in num_enis_by_az:
+                num_enis_by_az[eni['AvailabilityZone']] = 0
+            num_enis_by_az[eni['AvailabilityZone']] += 1
+
+        for az in num_enis_by_az:
+            print("adding current usage for az: ", az)
+            print("value: ", num_enis_by_az[az])
+            self.limits['Network interfaces per Region']._add_current_usage(
+                num_enis_by_az[az],
+                aws_type='AWS::EC2::NetworkInterface',
+                resource_id=az
+            )
 
     def get_limits(self):
         """
