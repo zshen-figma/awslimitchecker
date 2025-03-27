@@ -252,8 +252,6 @@ class _VpcService(_AwsService):
             num_enis_by_az[eni['AvailabilityZone']] += 1
 
         for az in num_enis_by_az:
-            print("adding current usage for az: ", az)
-            print("value: ", num_enis_by_az[az])
             self.limits['Network interfaces per Region']._add_current_usage(
                 num_enis_by_az[az],
                 aws_type='AWS::EC2::NetworkInterface',
